@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/dal";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { logout } from "@/app/actions/auth";
 
 export default async function AdminLayout({
@@ -20,12 +20,12 @@ export default async function AdminLayout({
           <span className="text-sm text-muted-foreground">
             {session.user.name}
           </span>
-          <Button
-            variant="outline"
-            size="sm"
-            nativeButton={false}
-            render={<Link href="/dashboard">Learner view</Link>}
-          />
+          <Link
+            href="/dashboard"
+            className={buttonVariants({ variant: "outline", size: "sm" })}
+          >
+            Learner view
+          </Link>
           <form action={logout}>
             <Button variant="ghost" size="sm" type="submit">
               Log out

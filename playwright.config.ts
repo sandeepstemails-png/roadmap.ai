@@ -7,7 +7,12 @@ export default defineConfig({
   workers: 1,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:3000",
+    // Dedicated port, distinct from 3000 (the default `next dev`/`next
+    // start` port). Without this, if a dev server is already running on
+    // 3000 (a very normal thing to have open locally), Playwright's
+    // reuseExistingServer silently tests THAT server instead of building
+    // and testing this checkout — passing or failing against stale code.
+    baseURL: "http://localhost:3100",
     trace: "retain-on-failure",
   },
   projects: [
@@ -17,8 +22,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run start",
-    url: "http://localhost:3000",
+    command: "npm run start -- -p 3100",
+    url: "http://localhost:3100",
     reuseExistingServer: true,
     timeout: 60_000,
   },

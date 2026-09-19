@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/dal";
 import { getRoadmaps } from "@/lib/data";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -19,10 +19,9 @@ export default async function AdminRoadmapsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Roadmaps</h1>
-        <Button
-          nativeButton={false}
-          render={<Link href="/admin/roadmaps/new">New roadmap</Link>}
-        />
+        <Link href="/admin/roadmaps/new" className={buttonVariants()}>
+          New roadmap
+        </Link>
       </div>
 
       <Table>
@@ -45,14 +44,15 @@ export default async function AdminRoadmapsPage() {
                 {new Date(roadmap.createdAt).toLocaleDateString()}
               </TableCell>
               <TableCell className="text-right">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  nativeButton={false}
-                  render={
-                    <Link href={`/admin/roadmaps/${roadmap.id}`}>Edit</Link>
-                  }
-                />
+                <Link
+                  href={`/admin/roadmaps/${roadmap.id}`}
+                  className={buttonVariants({
+                    variant: "outline",
+                    size: "sm",
+                  })}
+                >
+                  Edit
+                </Link>
               </TableCell>
             </TableRow>
           ))}

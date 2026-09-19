@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { verifySession } from "@/lib/dal";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { logout } from "@/app/actions/auth";
 
 export default async function DashboardLayout({
@@ -19,12 +19,12 @@ export default async function DashboardLayout({
             {session.user.name}
           </span>
           {session.user.role === "admin" && (
-            <Button
-              variant="outline"
-              size="sm"
-              nativeButton={false}
-              render={<Link href="/admin">Admin</Link>}
-            />
+            <Link
+              href="/admin"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              Admin
+            </Link>
           )}
           <form action={logout}>
             <Button variant="ghost" size="sm" type="submit">
