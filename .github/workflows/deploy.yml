@@ -4,6 +4,16 @@ name: Deploy to Vercel
 # code never auto-deploys to production. Run it from the Actions tab when
 # you're ready to deploy.
 #
+# ⚠️  DO NOT run this manually while Vercel's native Git integration is
+# connected (Project Settings -> Git). That integration already deploys
+# automatically on every push — previews for branches/PRs, production for
+# the configured production branch. Running this workflow at the same time
+# creates a second, independent deployment of the same commit via the
+# Vercel CLI, which is confusing (two deployments, unclear which is "live")
+# and wastes build minutes. Only use this workflow if the native Git
+# integration is disconnected/paused, or you specifically need a CLI-driven
+# deploy outside Vercel's normal flow.
+#
 # Requires these repo secrets (Vercel dashboard -> project -> Settings ->
 # General for the IDs, and vercel.com/account/tokens for the token):
 #   VERCEL_TOKEN

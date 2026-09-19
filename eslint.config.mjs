@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Nested node_modules and per-session worktree checkouts (e.g. under
+    // .claude/worktrees/) aren't covered by the defaults above.
+    "**/node_modules/**",
+    ".claude/worktrees/**",
   ]),
 ]);
 
