@@ -128,3 +128,14 @@
     @apply font-sans;
   }
 }
+
+/* Waypoint landing page only — subtle dot-grid texture, scoped to this
+   class rather than the global background so other pages are unaffected. */
+.waypoint-dots {
+  background-image: radial-gradient(
+    circle,
+    oklch(0.7 0.03 60 / 40%) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}

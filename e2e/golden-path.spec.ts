@@ -4,10 +4,29 @@ test.describe("Public landing page", () => {
   test("shows the marketing content and auth links", async ({ page }) => {
     await page.goto("/");
     await expect(
-      page.getByRole("heading", { name: /clear roadmap/i }),
+      page.getByRole("heading", { name: /mapped like a trail/i }),
     ).toBeVisible();
     await expect(page.getByRole("link", { name: "Log in" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Sign up" })).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Start learning" }),
+    ).toBeVisible();
+  });
+
+  test("shows the DevOps and Cloud Engineering track cards", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(
+      page.getByRole("heading", { name: "Choose a track" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "DevOps" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Cloud Engineering" }),
+    ).toBeVisible();
+    const viewTrailLinks = page.getByRole("link", { name: /View trail/i });
+    await expect(viewTrailLinks).toHaveCount(2);
   });
 });
 
