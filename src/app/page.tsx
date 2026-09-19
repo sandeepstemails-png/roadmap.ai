@@ -31,15 +31,20 @@ export default async function Home() {
         <nav className="flex items-center gap-2">
           {session?.user ? (
             <Button
+              nativeButton={false}
               render={<Link href="/dashboard">Go to dashboard</Link>}
             />
           ) : (
             <>
               <Button
                 variant="ghost"
+                nativeButton={false}
                 render={<Link href="/login">Log in</Link>}
               />
-              <Button render={<Link href="/signup">Sign up</Link>} />
+              <Button
+                nativeButton={false}
+                render={<Link href="/signup">Sign up</Link>}
+              />
             </>
           )}
         </nav>
@@ -57,11 +62,13 @@ export default async function Home() {
           <div className="flex gap-3 pt-2">
             <Button
               size="lg"
+              nativeButton={false}
               render={<Link href="/signup">Get started</Link>}
             />
             <Button
               size="lg"
               variant="outline"
+              nativeButton={false}
               render={
                 <Link href="/login">I already have an account</Link>
               }

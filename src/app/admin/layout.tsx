@@ -23,6 +23,7 @@ export default async function AdminLayout({
           <Button
             variant="outline"
             size="sm"
+            nativeButton={false}
             render={<Link href="/dashboard">Learner view</Link>}
           />
           <form action={logout}>

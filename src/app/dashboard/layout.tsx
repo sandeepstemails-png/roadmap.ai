@@ -22,6 +22,7 @@ export default async function DashboardLayout({
             <Button
               variant="outline"
               size="sm"
+              nativeButton={false}
               render={<Link href="/admin">Admin</Link>}
             />
           )}

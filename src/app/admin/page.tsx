@@ -19,7 +19,10 @@ export default async function AdminRoadmapsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Roadmaps</h1>
-        <Button render={<Link href="/admin/roadmaps/new">New roadmap</Link>} />
+        <Button
+          nativeButton={false}
+          render={<Link href="/admin/roadmaps/new">New roadmap</Link>}
+        />
       </div>
 
       <Table>
@@ -45,6 +48,7 @@ export default async function AdminRoadmapsPage() {
                 <Button
                   variant="outline"
                   size="sm"
+                  nativeButton={false}
                   render={
                     <Link href={`/admin/roadmaps/${roadmap.id}`}>Edit</Link>
                   }
