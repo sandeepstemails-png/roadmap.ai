@@ -32,9 +32,22 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env*.example
 
 # vercel
 .vercel
+
+# local sqlite database (dev only; production uses Turso)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
 # claude code worktrees (temporary, per-session; keep .claude/ project config tracked)
 .claude/worktrees/
