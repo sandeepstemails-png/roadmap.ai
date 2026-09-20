@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { verifySession } from "@/lib/dal";
 import { getRoadmapBySlug, getUserProgressForRoadmap } from "@/lib/data";
 import { RoadmapGraph } from "@/components/roadmap-graph";
+import { RoadmapTimeline } from "@/components/roadmap-timeline";
 
 export default async function RoadmapPage({
   params,
@@ -19,6 +20,21 @@ export default async function RoadmapPage({
     Number(session.user.id),
     nodeIds,
   );
+
+  // Roadmaps with no edges are a pure sequence — render them as a linear
+  // timeline. Roadmaps with edges are a branching graph and keep the
+  // React Flow canvas, which can represent multiple parents/paths.
+  if (roadmap.edges.length === 0) {
+    return (
+      <RoadmapTimeline
+        roadmapSlug={roadmap.slug}
+        title={roadmap.title}
+        description={roadmap.description}
+        nodes={roadmap.nodes}
+        progress={progressRows}
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4">

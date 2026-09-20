@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { verifySession } from "@/lib/dal";
-import { getOverallProgress, getRoadmaps } from "@/lib/data";
+import { getOverallProgress, getRoadmapsWithProgress } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export default async function DashboardPage() {
   const session = await verifySession();
   const [roadmaps, overallProgress] = await Promise.all([
-    getRoadmaps(),
+    getRoadmapsWithProgress(Number(session.user.id)),
     getOverallProgress(Number(session.user.id)),
   ]);
 
@@ -38,8 +39,46 @@ export default async function DashboardPage() {
                   <Badge variant="secondary">Roadmap</Badge>
                 </div>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                {roadmap.description ?? "No description yet."}
+              <CardContent className="flex flex-col gap-3 text-sm text-muted-foreground">
+                <p>{roadmap.description ?? "No description yet."}</p>
+
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center justify-between text-xs">
+                    <span>
+                      {roadmap.completedNodes} of {roadmap.totalNodes} topics
+                    </span>
+                    <span className="font-medium text-foreground">
+                      {roadmap.percentComplete}%
+                    </span>
+                  </div>
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-primary transition-[width]"
+                      style={{ width: `${roadmap.percentComplete}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-1 border-t pt-2 text-xs">
+                  {roadmap.readiness.map((level) => (
+                    <div
+                      key={level.key}
+                      className="flex items-center justify-between"
+                    >
+                      <span
+                        className={cn(
+                          level.achieved && "font-medium text-foreground",
+                        )}
+                      >
+                        {level.achieved ? "✅" : "⬜"} Job-ready:{" "}
+                        {level.label} ({level.threshold}%)
+                      </span>
+                      {!level.achieved && (
+                        <span>{level.remaining}% more</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
           </Link>

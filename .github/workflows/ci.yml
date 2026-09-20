@@ -65,6 +65,7 @@ jobs:
       - run: npm run db:generate
       - run: npm run db:migrate
       - run: npm run db:seed
+      - run: npm run db:seed:devops
       - run: npx playwright install --with-deps chromium
       - run: npm run build
       - run: npm run test:e2e

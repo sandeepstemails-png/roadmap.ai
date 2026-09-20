@@ -8,6 +8,13 @@
       "when": 1789821351602,
       "tag": "0000_small_the_order",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789870557777,
+      "tag": "0001_tough_monster_badoon",
+      "breakpoints": true
     }
   ]
 }

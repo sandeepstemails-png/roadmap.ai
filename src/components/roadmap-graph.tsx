@@ -14,6 +14,11 @@ import {
 import "@xyflow/react/dist/style.css";
 import { toggleNodeProgress } from "@/app/actions/progress";
 import { cn } from "@/lib/utils";
+import {
+  buildNodeResources,
+  NodeResourcesDialog,
+  type NodeResource,
+} from "@/components/node-resources-dialog";
 import type { RoadmapEdge, RoadmapNode } from "@/lib/data";
 import type { progress as progressTable } from "@/db/schema";
 
@@ -29,7 +34,7 @@ type RoadmapGraphProps = {
 type NodeData = {
   label: string;
   description: string | null;
-  resourceUrl: string | null;
+  resources: NodeResource[];
   completed: boolean;
   pending: boolean;
   onToggle: () => void;
@@ -37,19 +42,35 @@ type NodeData = {
 
 function TopicNode({ data }: NodeProps<Node<NodeData>>) {
   return (
-    <button
-      type="button"
-      onClick={data.onToggle}
-      disabled={data.pending}
+    <div
+      role="button"
+      tabIndex={0}
+      aria-disabled={data.pending}
+      onClick={() => {
+        if (!data.pending) data.onToggle();
+      }}
+      onKeyDown={(event) => {
+        if (
+          !data.pending &&
+          (event.key === "Enter" || event.key === " ")
+        ) {
+          event.preventDefault();
+          data.onToggle();
+        }
+      }}
       className={cn(
-        "rounded-md border bg-card px-4 py-2 text-left shadow-sm transition-colors",
+        "cursor-pointer rounded-md border bg-card px-4 py-2 text-left shadow-sm transition-colors",
         data.completed
           ? "border-primary bg-primary/10"
           : "border-border hover:border-primary/60",
+        data.pending && "pointer-events-none opacity-70",
       )}
     >
       <Handle type="target" position={Position.Top} />
-      <div className="text-sm font-medium">{data.label}</div>
+      <div className="flex items-center gap-1">
+        <div className="text-sm font-medium">{data.label}</div>
+        <NodeResourcesDialog nodeTitle={data.label} resources={data.resources} />
+      </div>
       {data.description && (
         <div className="text-xs text-muted-foreground">
           {data.description}
@@ -59,7 +80,7 @@ function TopicNode({ data }: NodeProps<Node<NodeData>>) {
         {data.completed ? "✅ Completed" : "Click to mark complete"}
       </div>
       <Handle type="source" position={Position.Bottom} />
-    </button>
+    </div>
   );
 }
 
@@ -108,7 +129,7 @@ export function RoadmapGraph({
         data: {
           label: node.title,
           description: node.description,
-          resourceUrl: node.resourceUrl,
+          resources: buildNodeResources(node),
           completed: completedIds.has(node.id),
           pending: pendingId === node.id,
           onToggle: () => handleToggle(node.id),

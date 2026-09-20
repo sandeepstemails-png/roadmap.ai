@@ -129,12 +129,57 @@
   }
 }
 
+/* Waypoint brand palette — used by the landing page, roadmap timeline, and
+   related components, which style with these tokens instead of the
+   grayscale shadcn theme above so the "Waypoint" identity has its own warm
+   look. Both light and dark values live here so those surfaces respond to
+   the theme toggle instead of staying stuck in light mode. */
+:root {
+  --waypoint-bg: #fbf3e7;
+  --waypoint-surface: #ffffff;
+  --waypoint-border: #eadfcc;
+  --waypoint-heading: #1b140d;
+  --waypoint-text: #241b14;
+  --waypoint-muted: #5c5346;
+  --waypoint-muted-2: #8a8172;
+  --waypoint-accent-from: #f0813e;
+  --waypoint-accent-to: #de5b1f;
+  --waypoint-accent-text: #de5b1f;
+  --waypoint-badge-bg: #fbeae0;
+  --waypoint-badge-border: #f0b896;
+  --waypoint-badge-text: #c0561f;
+  --waypoint-highlight: #bfddef;
+  --waypoint-dot-color: #f0b896;
+  --waypoint-line-color: #e8b98f;
+  --waypoint-dot-texture: oklch(0.7 0.03 60 / 40%);
+}
+
+.dark {
+  --waypoint-bg: #1b140d;
+  --waypoint-surface: #2a2018;
+  --waypoint-border: #3e3226;
+  --waypoint-heading: #fbf3e7;
+  --waypoint-text: #f3e9da;
+  --waypoint-muted: #c9bba8;
+  --waypoint-muted-2: #9c8d79;
+  --waypoint-accent-from: #f0813e;
+  --waypoint-accent-to: #de5b1f;
+  --waypoint-accent-text: #ff9a5c;
+  --waypoint-badge-bg: #3a2a1e;
+  --waypoint-badge-border: #6b4a30;
+  --waypoint-badge-text: #f0a574;
+  --waypoint-highlight: #2f4a5c;
+  --waypoint-dot-color: #6b4a30;
+  --waypoint-line-color: #5a4030;
+  --waypoint-dot-texture: oklch(0.9 0.03 60 / 8%);
+}
+
 /* Waypoint landing page only — subtle dot-grid texture, scoped to this
    class rather than the global background so other pages are unaffected. */
 .waypoint-dots {
   background-image: radial-gradient(
     circle,
-    oklch(0.7 0.03 60 / 40%) 1px,
+    var(--waypoint-dot-texture) 1px,
     transparent 1px
   );
   background-size: 22px 22px;

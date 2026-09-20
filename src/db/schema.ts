@@ -45,6 +45,22 @@ export const roadmapNodes = sqliteTable("roadmap_nodes", {
     .default(sql`(current_timestamp)`),
 });
 
+// A node can point to several learning resources (a video, a course site,
+// docs, …) — resourceUrl above only ever held one, so multi-resource nodes
+// (e.g. DevOps topics linking both a YouTube channel and a course site)
+// need their own rows instead.
+export const roadmapNodeResources = sqliteTable("roadmap_node_resources", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  nodeId: integer("node_id")
+    .notNull()
+    .references(() => roadmapNodes.id, { onDelete: "cascade" }),
+  label: text("label").notNull(),
+  url: text("url").notNull(),
+  createdAt: text("created_at")
+    .notNull()
+    .default(sql`(current_timestamp)`),
+});
+
 export const roadmapEdges = sqliteTable("roadmap_edges", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   roadmapId: integer("roadmap_id")
@@ -100,6 +116,17 @@ export const roadmapNodesRelations = relations(
       references: [roadmaps.id],
     }),
     progress: many(progress),
+    resources: many(roadmapNodeResources),
+  }),
+);
+
+export const roadmapNodeResourcesRelations = relations(
+  roadmapNodeResources,
+  ({ one }) => ({
+    node: one(roadmapNodes, {
+      fields: [roadmapNodeResources.nodeId],
+      references: [roadmapNodes.id],
+    }),
   }),
 );
 

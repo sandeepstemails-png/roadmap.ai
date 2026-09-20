@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { verifySession } from "@/lib/dal";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { logout } from "@/app/actions/auth";
 
 export default async function DashboardLayout({
@@ -26,6 +27,7 @@ export default async function DashboardLayout({
               Admin
             </Link>
           )}
+          <ThemeToggle />
           <form action={logout}>
             <Button variant="ghost" size="sm" type="submit">
               Log out

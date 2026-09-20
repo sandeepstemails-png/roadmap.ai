@@ -19,7 +19,7 @@ export function WaypointLogo({ className }: { className?: string }) {
   return (
     <span className={`flex items-center gap-2 ${className ?? ""}`}>
       <WaypointMark className="size-6" />
-      <span className="font-[family-name:var(--font-fraunces)] text-xl font-bold tracking-tight text-[#241B14]">
+      <span className="font-[family-name:var(--font-fraunces)] text-xl font-bold tracking-tight text-(--waypoint-text)">
         Waypoint
       </span>
     </span>
